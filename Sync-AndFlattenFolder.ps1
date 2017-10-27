@@ -79,9 +79,7 @@ function Sync-AndFlattenFolder {
 }
 
 function EnsureEndingSlash {
-  param(
-    [Parameter(ValueFromPipeline)]  
-    $path)
+  param($path)
   if (!$path.EndsWith([IO.Path]::DirectorySeparatorChar)) {
     $path += [IO.Path]::DirectorySeparatorChar
   }
