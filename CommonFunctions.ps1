@@ -66,13 +66,10 @@ function Get-AppDataPath {
   $localAppDataFolder = $Env:LOCALAPPDATA
 
   if ($ServerName -ne $null) {
-    $localAppDataFolder = Join-Path $RootFolder $ServerName `
-      | Get-ChildItem | ? { $_.PSIsContainer } | Sort-Object LastWriteTime -Descending `
-      | Select-Object -ExpandProperty FullName -First 1 `
-      | Join-Path -ChildPath '*\Users\mosart\AppData\Local'
+    $localAppDataFolder = $localAppDataFolder -replace "([a-z]\:)", "\\$($ServerName)\c$"
   }
 
   Join-Path $localAppDataFolder -ChildPath 'Mosart_Medialab' `
     | Join-Path -ChildPath "$($AppName)*\*\user.config" -Resolve `
-    | Sort -Descending | Select-Object -First 1
+    | Sort -Descending | Select-Object -First 1 | Convert-Path
 }
