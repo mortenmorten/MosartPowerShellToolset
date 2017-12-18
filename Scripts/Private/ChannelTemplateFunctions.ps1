@@ -1,3 +1,13 @@
+<#
+.SYNOPSIS
+  Converts integer template type values to the text representation
+
+.PARAMETER Value
+  Template type as integer
+
+.EXAMPLE
+  ConvertTo-TemplateType 1
+#>
 function ConvertTo-TemplateType {
   [CmdletBinding()]
   param(
@@ -26,6 +36,13 @@ function ConvertTo-TemplateType {
   }
 }
 
+<#
+.SYNOPSIS
+  Converts a template set from XML to object
+
+.PARAMETER XmlElement
+  An XML element node of a template set
+#>
 function ConvertTo-TemplateSetObject {
   [CmdletBinding()]
   param(
@@ -42,6 +59,13 @@ function ConvertTo-TemplateSetObject {
   }
 }
 
+<#
+.SYNOPSIS
+  Converts a template from XML to object
+
+.PARAMETER XmlElement
+  An XML element node of a template
+#>
 function ConvertTo-TemplateObject {
   [CmdletBinding()]
   param(
