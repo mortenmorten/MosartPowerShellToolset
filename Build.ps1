@@ -65,7 +65,7 @@
 ###############################################################################
 Properties {
     # The name of your module should match the basename of the PSD1 file.
-    $ModuleName = (Get-Item $PSScriptRoot\*.psd1 |
+    $ModuleName = (Get-Item $PSScriptRoot\Scripts\*.psd1 |
                    Foreach-Object {$null = Test-ModuleManifest -Path $_ -ErrorAction SilentlyContinue; if ($?) {$_}})[0].BaseName
 
     # Path to the release notes file.  Set to $null if the release notes reside in the manifest file.
@@ -159,7 +159,7 @@ Task Test -depends Build {
 }
 
 Task Build -depends Clean, Init -requiredVariables PublishDir, Exclude, ModuleName {
-    Copy-Item -Path $PSScriptRoot\* -Destination $PublishDir -Recurse -Exclude $Exclude
+    Copy-Item -Path $PSScriptRoot\Scripts\* -Destination $PublishDir -Recurse -Exclude $Exclude
 
     # Get contents of the ReleaseNotes file and update the copied module manifest file
     # with the release notes.
