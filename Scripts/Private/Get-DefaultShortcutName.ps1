@@ -6,12 +6,18 @@ function Get-DefaultShortcutName
     [Parameter(Mandatory = $true)][string]$file
   )
   
-  if (-Not (Test-Path($file))) { return $null }
-  
-  $XPath = "//shortcuts[@default='True']/@name"
-  $xml = [xml] (Get-Content $file)
-  
-  $value = $xml.SelectSingleNode($XPath).Value
-  Write-Host "Default name:" $value
-  return $value
+  if (-Not (Test-Path($file))) { 
+    $value = $null 
+  }
+  else {
+    $XPath = "(//shortcuts[translate(@default, 'TRUE', 'true')='true'] | //shortcuts[1])[1]/@name"
+    $xml = [xml] (Get-Content $file)
+    $value = $xml.SelectSingleNode($XPath).Value
+  }
+
+  Write-Verbose "Default name: $($value)"
+
+  $rtrn = New-Object -TypeName PSObject
+  $rtrn | Add-Member -MemberType NoteProperty -Name DefaultShortcutName -Value ($value) -PassThru
+  Write-Output $rtrn
 }

@@ -1,50 +1,29 @@
+$Global:MosartKeyboardSettings = [pscustomobject] @{
+  LocalShortcutsPath = ${Env:ProgramData} + "\Mosart Medialab\ConfigurationFiles\keyboard_shortcuts.xml"
+  RemoteShortcutsPath = [string] $null
+}
+
+$Global:PSDefaultParameterValues = @{
+  "Update-KeyboardShortcutsFromExternal:file"   = {$Global:MosartKeyboardSettings.RemoteShortcutsPath};
+  "Update-KeyboardShortcutsFromExternal:output" = {$Global:MosartKeyboardSettings.LocalShortcutsPath}
+}
+
 Function Update-KeyboardShortcutsFromExternal {
+  [CmdletBinding()]
   param(
-    [string]$repos_path = ${Env:ProgramData} + "\Vizrt\MosartGuiSettingsCache\",
-    [string]$repos_filename = "keyboard_shortcuts.xml",
-    [string]$file,
-    [string]$output = ${Env:ProgramData} + "\Mosart Medialab\ConfigurationFiles\keyboard_shortcuts.xml"
+    [Parameter(
+      Position = 0,
+      Mandatory = $true,
+      ValueFromPipelineByPropertyName = $true
+    )]
+    [string] $file,
+    [Parameter(
+      Position = 1,
+      Mandatory = $true,
+      ValueFromPipelineByPropertyName = $true
+    )]
+    [string] $output
   )
-
-  $use_repository = $true;
-  if ($file -ne $null) 
-  {
-    $use_repository = $false
-  }
-  else
-  {
-    $file = $repos_path + $repos_filename
-    Write-Host "Repository path:" $repos_path
-  }
-
-  Write-Host "File:" $file
-  Write-Host "Output:" $output
-
-  if ($use_repository)
-  {
-    Write-Host "Pulling changes"
-
-    $git_pull_result = Execute-Command -commandPath git -commandArguments "pull" -workingDirectory $repos_path
-
-    If ($git_pull_result.stdout.StartsWith("Already up-to-date."))
-    {
-      If (-Not(Test-Path($output)))
-      {
-        # Check if the file exists - if not create it
-        $dirName = Split-Path -Path $output
-        if (($dirName -ne $null) -and (-Not(Test-Path($dirName))))
-        {
-          New-Item $dirName -ItemType Directory -Force | Out-Null
-        }
-        Copy-Item -Path $file -Destination $output
-      }
-      Else
-      {
-        Write-Host "Already up-to-date. Nothing to do."
-      }
-      Return
-    }
-  }
 
   Copy-KeyboardShortcuts $file $output
 }

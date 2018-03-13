@@ -1,16 +1,17 @@
 # Copies the keyboard shortcuts without loosing the default selected setup 
-Function Copy-KeyboardShortcuts
-{
+Function Copy-KeyboardShortcuts {
+  [CmdletBinding()]
   param(
     # Source keyboard settings file
-    [Parameter(Mandatory = $true)][string]$file, 
+    [Parameter(Mandatory = $true)]
+    [string] $file, 
     # Target keyboard settings file
-    [Parameter(Mandatory = $true)][string]$output
+    [Parameter(Mandatory = $true)]
+    [string] $output
   )
 
-  Write-Host "File:" $file
-  Write-Host "Output:" $output
+  Write-Verbose "File: $($file)"
+  Write-Verbose "Output: $($output)"
 
-  $currentName = Get-DefaultShortcutName -file $output
-  Set-DefaultShortcuts -file $file -name $currentName -output $output
+  Get-DefaultShortcutName -file $output | Set-DefaultShortcuts -file $file -output $output
 }
