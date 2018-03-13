@@ -9,6 +9,7 @@
   FunctionsToExport = @('Compare-ComputerSettings',
                         'Copy-ComputerSettings',
                         'Copy-ServerConfigs',
+                        'Update-KeyboardShortcutsFromExternal',
                         'Sync-AndFlattenFolder')
   CmdletsToExport   = @()
   VariablesToExport = '*'
