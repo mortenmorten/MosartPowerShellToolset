@@ -34,5 +34,5 @@ function Set-DefaultShortcuts {
     }
   }
   
-  $xml.Save($output)
+  Set-XmlContent -Path $output -Value $xml
 }
