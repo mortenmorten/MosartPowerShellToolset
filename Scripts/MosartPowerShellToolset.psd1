@@ -10,7 +10,8 @@
                         'Copy-ComputerSettings',
                         'Copy-ServerConfigs',
                         'Export-KeyboardShortcuts',
-                        'Import-KeyboardShortcuts',
+                        'Import-KeyboardShortcuts'
+                        'Remove-KeyboardShortcut',
                         'Sync-AndFlattenFolder')
   CmdletsToExport   = @()
   VariablesToExport = '*'
