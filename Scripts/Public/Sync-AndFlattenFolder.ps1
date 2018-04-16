@@ -54,24 +54,30 @@ function Sync-AndFlattenFolder {
 
   $newFiles = @{}
 
-  # Loop through and process all files in all subfolders 
-  foreach ($file in Get-ChildItem $absolutePath -Recurse | Where-Object { !$_.PSIsContainer }) {
+  # Loop through and process all files in all subfolders
+  $sourceFiles = (Get-ChildItem $absolutePath -Recurse | Where-Object { !$_.PSIsContainer })
+  $i = 0
+  $fileCount = $sourceFiles.length
+  foreach ($file in $sourceFiles) {
     $flattenedPath = $file.DirectoryName.Replace($absolutePath, "").Replace([IO.Path]::DirectorySeparatorChar, $SeparatorChar)
     $destinationFileName = ($flattenedPath + $SeparatorChar + $file).Substring(1)
     
     $newFiles.Add($destinationFileName, $file)
 
-    $sourcePath = [IO.Path]::Combine($file.DirectoryName, $file.Name)
+    $sourcePath = Join-Path $file.DirectoryName $file.Name
 
     # Check if the file does not exists, or is newer than the existing one, if true then copy
     if ((!$existingFiles.ContainsKey($destinationFileName)) -or ($existingFiles.Get_Item($destinationFileName).LastWriteTime -lt $file.LastWriteTime)) {
-      $destinationFullPath = $Destination + $destinationFileName
+      $destinationFullPath = Join-Path $Destination $destinationFileName
+      $msg = "Copying $(sourcePath) to $($destinationFullPath)" 
       Copy-Item -LiteralPath $sourcePath -Destination $destinationFullPath -Force
-      Write-Verbose "Copied $($destinationFileName)" 
     }
     else {
-      Write-Verbose "No changes to $($destinationFileName)"
+      $msg = "No changes to $($destinationFileName)"
     }
+    
+    Write-Progress -Activity "Processing remote files" -Status "Progress" -PercentComplete ($i / $filecount * 100) -CurrentOperation $msg
+    $i++
   }
 
   # Delete files not present in $Path
@@ -85,3 +91,5 @@ function EnsureEndingSlash {
   }
   $path
 }
+
+Export-ModuleMember -Function Sync-AndFlattenFolder
