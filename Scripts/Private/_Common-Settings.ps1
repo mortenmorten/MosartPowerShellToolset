@@ -3,9 +3,16 @@ $Global:MosartKeyboardSettings = [pscustomobject] @{
   RemoteShortcutsPath = [string] $null
 }
 
+$Global:MosartCommonPaths = [PSCustomObject] @{
+  LocalAudioFilesPath = [string] $null;
+  RemoteAudioFilesPath = [string] $null
+}
+
 $Global:PSDefaultParameterValues = @{
   "Import-KeyboardShortcuts:LiteralPath" = {$Global:MosartKeyboardSettings.RemoteShortcutsPath};
   "Import-KeyboardShortcuts:Destination" = {$Global:MosartKeyboardSettings.LocalShortcutsPath};
   "Export-KeyboardShortcuts:LiteralPath" = {$Global:MosartKeyboardSettings.LocalShortcutsPath};
-  "Export-KeyboardShortcuts:Destination" = {$Global:MosartKeyboardSettings.RemoteShortcutsPath}
+  "Export-KeyboardShortcuts:Destination" = {$Global:MosartKeyboardSettings.RemoteShortcutsPath};
+  "Sync-AndFlattenFolder:LiteralPath"    = {$Global:MosartCommonPaths.RemoteAudioFilesPath};
+  "Sync-AndFlattenFolder:Destination"    = {$Global:MosartCommonPaths.LocalAudioFilesPath};
 }
