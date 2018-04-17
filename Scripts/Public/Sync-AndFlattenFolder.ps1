@@ -69,7 +69,7 @@ function Sync-AndFlattenFolder {
     # Check if the file does not exists, or is newer than the existing one, if true then copy
     if ((!$existingFiles.ContainsKey($destinationFileName)) -or ($existingFiles.Get_Item($destinationFileName).LastWriteTime -lt $file.LastWriteTime)) {
       $destinationFullPath = Join-Path $Destination $destinationFileName
-      $msg = "Copying $(sourcePath) to $($destinationFullPath)" 
+      $msg = "Copying $($sourcePath) to $($destinationFullPath)" 
       Copy-Item -LiteralPath $sourcePath -Destination $destinationFullPath -Force
     }
     else {
