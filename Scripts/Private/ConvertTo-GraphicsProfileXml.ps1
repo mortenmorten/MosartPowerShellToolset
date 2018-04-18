@@ -1,7 +1,8 @@
 function ConvertTo-GraphicsProfileXml {
   param(
     $Profiles,
-    [switch]$AvAutomation
+    [switch]$AvAutomation,
+    [string]$DefaultProfileName
   )
 
   [xml]$doc = New-Object System.Xml.XmlDocument
@@ -13,7 +14,12 @@ function ConvertTo-GraphicsProfileXml {
     $e.SetAttribute("display_name", $profile.name) | Out-Null
     $showpath = ""
     $concept = $profile.concept
-    $default = ($profile.default -ne $null) -and $profile.default
+    if ($DefaultProfileName) {
+      $default = $profile.name -eq $DefaultProfileName
+    }
+    else {
+      $default = ($profile.default -ne $null) -and $profile.default
+    }
 
     $data = $profile.overlaygraphics
     if ($AvAutomation) {

@@ -48,7 +48,11 @@ Function Update-GraphicsProfiles {
       ParameterSetName = "AVA",
       Position = 3,
       ValueFromPipelineByPropertyName = $true)]
-    [string] $AvAutomationPath
+    [string] $AvAutomationPath,
+    [Parameter(
+      Position = 4,
+      ValueFromPipelineByPropertyName = $true)]
+    [string] $DefaultProfileName
   )
 
   $entries = @()
@@ -89,7 +93,7 @@ Function Update-GraphicsProfiles {
     Write-Verbose "Replacing inner text in '$($entry.xpath)' in file $($entry.filepath)"
 
     [xml] $configContent = gc $entry.filepath
-    $configContent.SelectSingleNode($entry.xpath).InnerText = (ConvertTo-GraphicsProfileXml -Profiles $Content -AvAutomation:$entry.fullscreen)
+    $configContent.SelectSingleNode($entry.xpath).InnerText = (ConvertTo-GraphicsProfileXml -Profiles $Content -AvAutomation:$entry.fullscreen -DefaultProfileName $DefaultProfileName)
     $configContent.Save($entry.filepath)
   }
 }
