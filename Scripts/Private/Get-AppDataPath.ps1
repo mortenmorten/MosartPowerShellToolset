@@ -20,7 +20,7 @@ function Get-AppDataPath {
   # If server name is $null then use local settings
   $localAppDataFolder = $Env:LOCALAPPDATA
 
-  if ($ServerName -ne $null) {
+  if ($ServerName) {
     $localAppDataFolder = $localAppDataFolder -replace "([a-z]\:)", "\\$($ServerName)\c$"
   }
 

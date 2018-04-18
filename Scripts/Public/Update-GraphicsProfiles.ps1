@@ -14,7 +14,7 @@
   ConvertFrom-Json $json | Update-GraphicsProfiles -AvAutomation
 #>
 Function Update-GraphicsProfiles {
-  [CmdletBinding()]
+  [CmdletBinding(DefaultParameterSetName = "Paths")]
   param(
     [Parameter(
       Position = 0,
@@ -25,7 +25,6 @@ Function Update-GraphicsProfiles {
     [Parameter(
       ParameterSetName = "Paths",
       Position = 1,
-      Mandatory = $true,
       ValueFromPipelineByPropertyName = $true)]
     [string[]] $Path,
     [Parameter(

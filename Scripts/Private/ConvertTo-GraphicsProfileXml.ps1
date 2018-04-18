@@ -13,7 +13,7 @@ function ConvertTo-GraphicsProfileXml {
     $e.SetAttribute("display_name", $profile.name) | Out-Null
     $showpath = ""
     $concept = $profile.concept
-    $default = $profile.default -ne $null -and $profile.default
+    $default = ($profile.default -ne $null) -and $profile.default
 
     $data = $profile.overlaygraphics
     if ($AvAutomation) {
@@ -36,7 +36,7 @@ function ConvertTo-GraphicsProfileXml {
     $e.SetAttribute("concept", $concept) | Out-Null
     $e.SetAttribute("show_path", $showpath) | Out-Null
     $e.SetAttribute("default_scene_wall", "") | Out-Null
-    $e.SetAttribute("default", $default) | Out-Null
+    $e.SetAttribute("default", [System.Xml.XmlConvert]::ToString($default)) | Out-Null
     $root.AppendChild($e) | Out-Null
   }
 
