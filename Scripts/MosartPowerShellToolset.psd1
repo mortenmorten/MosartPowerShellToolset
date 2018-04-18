@@ -12,6 +12,7 @@
                         'Export-KeyboardShortcuts',
                         'Import-KeyboardShortcuts'
                         'Remove-KeyboardShortcut',
+                        'Update-GraphicsProfiles',
                         'Sync-AndFlattenFolder')
   CmdletsToExport   = @()
   VariablesToExport = '*'
