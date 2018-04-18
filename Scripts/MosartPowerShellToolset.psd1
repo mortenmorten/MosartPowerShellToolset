@@ -1,6 +1,6 @@
 @{
   ModuleToProcess   = 'MosartPowerShellToolset.psm1'
-  ModuleVersion     = '2.0'
+  ModuleVersion     = '3.0'
   GUID              = '549626e6-7af0-4540-af3c-45bdf49383ed'
   Author            = 'Morten Larsen'
   Copyright         = '(c) 2017 Morten Larsen'
