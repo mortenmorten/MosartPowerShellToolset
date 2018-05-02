@@ -1,18 +1,18 @@
 Function Export-KeyboardShortcuts {
-  [CmdletBinding()]
+  [CmdletBinding(DefaultParameterSetName = "OneShortcut")]
   param(
     [Parameter(
       Position = 0,
-      Mandatory = $true,
+      Mandatory = $false,
       ValueFromPipelineByPropertyName = $true
     )]
-    [string] $LiteralPath,
+    [string] $LiteralPath = $MosartKeyboardSettings.LocalShortcutsPath,
     [Parameter(
       Position = 1,
-      Mandatory = $true,
+      Mandatory = $false,
       ValueFromPipelineByPropertyName = $true
     )]
-    [string] $Destination,
+    [string] $Destination = $MosartKeyboardSettings.RemoteShortcutsPath,
     [Parameter(
       Position = 2,
       Mandatory = $true,

@@ -19,7 +19,7 @@ function Replace-KeyboardShortcutsContent {
   )
 
   $importContent = $Content.ImportNode($ShortcutContent, $true)
-  $shortcutName = $importContent.Attributes["name"].Value
+  $shortcutName = $importContent.Attributes.GetNamedItem("name").Value
   Write-Verbose "Importing shortcuts: $($shortcutName)"
 
   $existingShortcutContent = $Content.SelectSingleNode(".//shortcuts[@name='$($shortcutName)']")
