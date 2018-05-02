@@ -3,16 +3,16 @@ Function Import-KeyboardShortcuts {
   param(
     [Parameter(
       Position = 0,
-      Mandatory = $true,
+      Mandatory = $false,
       ValueFromPipelineByPropertyName = $true
     )]
-    [string] $LiteralPath,
+    [string] $LiteralPath = $MosartKeyboardSettings.RemoteShortcutsPath,
     [Parameter(
       Position = 1,
-      Mandatory = $true,
+      Mandatory = $false,
       ValueFromPipelineByPropertyName = $true
     )]
-    [string] $Destination
+    [string] $Destination = $MosartKeyboardSettings.LocalShortcutsPath
   )
 
   Copy-KeyboardShortcuts $LiteralPath $Destination
